@@ -1,8 +1,9 @@
-﻿  transmitter.cpp
-  receiver.cpp
-  main.cpp
+﻿  system.cpp
+  results.cpp
+  modulator.cpp
+  Generating Code...
+  Compiling...
   coder.cpp
-  channel.cpp
   Generating Code...
   VIterbi.vcxproj -> C:\Users\Alina\projektViterbi\viterbi_decoder\Viterbi\Debug\VIterbi.exe
   VIterbi.vcxproj -> C:\Users\Alina\projektViterbi\viterbi_decoder\Viterbi\Debug\VIterbi.pdb (Partial PDB)

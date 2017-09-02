@@ -21,14 +21,22 @@
   <ItemGroup>
     <ClCompile Include="files\channel.cpp" />
     <ClCompile Include="files\coder.cpp" />
+    <ClCompile Include="files\generator.cpp" />
     <ClCompile Include="files\main.cpp" />
+    <ClCompile Include="files\modulator.cpp" />
     <ClCompile Include="files\receiver.cpp" />
+    <ClCompile Include="files\results.cpp" />
+    <ClCompile Include="files\system.cpp" />
     <ClCompile Include="files\transmitter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="files\channel.h" />
     <ClInclude Include="files\coder.h" />
+    <ClInclude Include="files\generator.h" />
+    <ClInclude Include="files\modulator.h" />
     <ClInclude Include="files\receiver.h" />
+    <ClInclude Include="files\results.h" />
+    <ClInclude Include="files\system.h" />
     <ClInclude Include="files\transmitter.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

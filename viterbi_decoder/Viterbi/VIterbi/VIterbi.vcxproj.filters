@@ -30,6 +30,18 @@
     <ClCompile Include="files\transmitter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="files\modulator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="files\system.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="files\results.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="files\generator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="files\channel.h">
@@ -42,6 +54,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="files\transmitter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="files\modulator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="files\system.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="files\results.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="files\generator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
