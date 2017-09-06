@@ -12,6 +12,7 @@ public:
   unsigned int RandomBit();
   double Random01();
   double Expotential();
+  double Expotential01();
 
 private:
   int seed_;

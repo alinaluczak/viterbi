@@ -32,3 +32,8 @@ double Generator::Expotential()
   double k = Random01();
   return -(1.0 / lambda_)*log(k);
 }
+
+double Generator::Expotential01()
+{
+  return (((int)Expotential() % 99) + 1) / 100.0;
+}

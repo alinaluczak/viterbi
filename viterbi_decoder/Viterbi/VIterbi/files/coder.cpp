@@ -32,6 +32,6 @@ int Coder::CoderFunction(int input_value)
   }
   previous_state_ = current_state_;
   current_state_ = transition_table_[previous_state_][input_value];
-  int output_value = output_table_[current_state_][input_value];
+  int output_value = output_table_[previous_state_][input_value];
   return output_value;
 }
