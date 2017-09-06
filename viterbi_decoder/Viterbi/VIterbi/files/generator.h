@@ -9,6 +9,7 @@ public:
   Generator(int seed, double lambda = 0.02);
   ~Generator();
   int RandomNumber();
+  unsigned int RandomBit();
   double Random01();
   double Expotential();
 

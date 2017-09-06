@@ -4,8 +4,8 @@
 class Channel
 {
 public:
- Channel();
- ~Channel();
+  Channel();
+  ~Channel();
 };
 
 #endif //VITERBI_CHANNEL_H

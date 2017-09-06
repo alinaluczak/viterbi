@@ -4,8 +4,8 @@
 class Receiver
 {
 public:
- Receiver();
- ~Receiver();
+  Receiver();
+  ~Receiver();
 };
 
 #endif //VITERBI_RECEIVER_H

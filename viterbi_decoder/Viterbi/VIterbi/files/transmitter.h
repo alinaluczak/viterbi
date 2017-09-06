@@ -4,7 +4,7 @@
 class Transmitter
 {
 public:
- Transmitter();
- ~Transmitter();
+  Transmitter();
+  ~Transmitter();
 };
 #endif //VITERBI_TRANSMITTER_H

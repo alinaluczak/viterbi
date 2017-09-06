@@ -1,9 +1,6 @@
-﻿  system.cpp
-  results.cpp
-  modulator.cpp
-  Generating Code...
-  Compiling...
-  coder.cpp
+﻿  modulator.cpp
+  main.cpp
+c:\users\alina\projektviterbi\viterbi_decoder\viterbi\viterbi\files\coder.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
   Generating Code...
   VIterbi.vcxproj -> C:\Users\Alina\projektViterbi\viterbi_decoder\Viterbi\Debug\VIterbi.exe
   VIterbi.vcxproj -> C:\Users\Alina\projektViterbi\viterbi_decoder\Viterbi\Debug\VIterbi.pdb (Partial PDB)

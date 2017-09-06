@@ -4,8 +4,8 @@
 class System
 {
 public:
- System();
- ~System();
+  System();
+  ~System();
 };
 
 #endif //VITREBI_SYSTEM_H

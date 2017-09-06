@@ -4,8 +4,8 @@
 class Results
 {
 public:
- Results();
- ~Results();
+  Results();
+  ~Results();
 };
 
 #endif // !VITERBI_RESULTS_H
