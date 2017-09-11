@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="circular_list.cpp" />
     <ClCompile Include="files\channel.cpp" />
     <ClCompile Include="files\coder.cpp" />
     <ClCompile Include="files\generator.cpp" />
@@ -26,15 +27,18 @@
     <ClCompile Include="files\modulator.cpp" />
     <ClCompile Include="files\receiver.cpp" />
     <ClCompile Include="files\results.cpp" />
+    <ClCompile Include="files\simulation.cpp" />
     <ClCompile Include="files\system.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="circular_list.h" />
     <ClInclude Include="files\channel.h" />
     <ClInclude Include="files\coder.h" />
     <ClInclude Include="files\generator.h" />
     <ClInclude Include="files\modulator.h" />
     <ClInclude Include="files\receiver.h" />
     <ClInclude Include="files\results.h" />
+    <ClInclude Include="files\simulation.h" />
     <ClInclude Include="files\system.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

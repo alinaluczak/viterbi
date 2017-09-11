@@ -39,6 +39,12 @@
     <ClCompile Include="files\generator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="files\simulation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="circular_list.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="files\channel.h">
@@ -60,6 +66,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="files\generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="files\simulation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="circular_list.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
