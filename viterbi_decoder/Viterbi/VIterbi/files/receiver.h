@@ -19,9 +19,10 @@ public:
   int ReceiverFunction(_complex);
 
 private:
-  static const int number_of_states = 8;
-  static const _complex modulator_table_[number_of_states];
-  Node* tab[number_of_states /2];
+  static const int number_of_states = 4;
+  static const _complex modulator_table_[number_of_states * 2];
+  static const int transition_table_[][number_of_states];
+  Node* tab[number_of_states];
   int tab_index;
 
 };
