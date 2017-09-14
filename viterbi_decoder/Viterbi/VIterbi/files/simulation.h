@@ -10,9 +10,9 @@ public:
   Simulation();
   ~Simulation();
 
+
 private:
-
-
+  int number_of_simulation;
 
 };
 

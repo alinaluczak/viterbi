@@ -2,6 +2,8 @@
 
 Simulation::Simulation()
 {
+  number_of_simulation = 0;
+
 }
 
 
