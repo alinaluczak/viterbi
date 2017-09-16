@@ -14,7 +14,7 @@ int main()
   cout << "Result: " << result << endl;
 
   _complex complex;
-  Channel *channel = new Channel();
+  Channel *channel = new Channel(123, 0.1);
   for (int i = 0; i < 30; i++)
   {
     complex.x = 1;

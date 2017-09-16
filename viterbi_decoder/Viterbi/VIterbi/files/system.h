@@ -11,9 +11,9 @@
 class System
 {
 public:
-  System();
+  System(int number_of_simulation, int end_condition, int seeds[2], double lambda);
   ~System();
-  void MainLoop(int);
+  void MainLoop();
 
 private:
   Channel *p_channel_;

@@ -9,11 +9,11 @@ class Simulation
 public:
   Simulation();
   ~Simulation();
-
+  int Start();
 
 private:
   int number_of_simulation;
-
+  void SeedGeneration();
 };
 
 #endif //VITERBI_SIOMUALTON_H

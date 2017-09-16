@@ -6,7 +6,7 @@
 class Channel
 {
 public:
-  Channel();
+  Channel(int seed, double lambda);
   ~Channel();
   _complex ChannelFunction(_complex &input_value);
 
