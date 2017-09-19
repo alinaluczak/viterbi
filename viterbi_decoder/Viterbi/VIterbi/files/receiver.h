@@ -2,12 +2,13 @@
 #define VITERBI_RECEIVER_H
 
 #include <cmath>
+#include"results.h"
 
 struct Node
 {
-  int uncoded_bit[4];
-  int dfree[4];
-  int prevoius_state[4];
+  int uncoded_bit_tab[4];
+  int dfree_tab[4];
+  int prevoius_state_tab[4];
 
 };
 
@@ -23,8 +24,9 @@ private:
   static const int size_of_buffer_table = 9; // 9 = (number of coder states + 1) * 3
   static const _complex modulator_table_[number_of_states * 2];
   static const int transition_table_[][number_of_states];
+  static const int reversed_transition_table_[][number_of_states];
   static const int output_table_[][number_of_states];
-  static int is_reday_for_decision; //if this variable >= 9 - then it is ready
+  int is_reday_for_decision; //if this variable >= 9 - then it is ready
   Node* buffer_table[size_of_buffer_table];
   int tab_index;
 

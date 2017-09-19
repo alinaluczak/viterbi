@@ -17,6 +17,14 @@ const int Receiver::transition_table_[][number_of_states] = { { 0, 2, 0, 2 },
                                                               { 1, 3, 1, 3 },
                                                               { 1, 3, 1, 3 } };
 
+
+/* Reversed Transition Table - representing output value (decoded bits), basing on present state (column) and prevoius state (row) */
+const int Receiver::reversed_transition_table_[][number_of_states] = { { 0, -1, 1, -1 },
+                                                                       { 0, -1, 1, -1 },
+                                                                       { -1, 0, -1, 1 },
+                                                                       { -1, 0, -1, 1 } };
+
+
 /* Output Table - representing output, basig on current state (row) and input (column) */
 const int Receiver::output_table_[][number_of_states] = { { 0,2,4,6 },
                                                           { 2,0,6,4 },
@@ -50,8 +58,8 @@ int Receiver::ReceiverFunction(_complex received_value)
 
   for (int i = 0; i < number_of_states; i++)
   {
-    int cost = 100;
-    buffer_table[tab_index]->uncoded_bit[i] = 0;
+    int cost = 1 << 30;
+    buffer_table[tab_index]->uncoded_bit_tab[i] = 0;
     switch (i)
     {
       case 0:
@@ -64,19 +72,19 @@ int Receiver::ReceiverFunction(_complex received_value)
             cost = d0;
             if (k >= 4)
             {
-              buffer_table[tab_index]->uncoded_bit[i] = 1;
+              buffer_table[tab_index]->uncoded_bit_tab[i] = 1;
             }
             if (k == 0 || k == 4)
             {
-              buffer_table[tab_index]->prevoius_state[i] = 0;
+              buffer_table[tab_index]->prevoius_state_tab[i] = 0;
             }
             else
             {
-              buffer_table[tab_index]->prevoius_state[i] = 1;
+              buffer_table[tab_index]->prevoius_state_tab[i] = 1;
             }
           }
         }
-        buffer_table[tab_index]->dfree[i] += cost;
+        buffer_table[tab_index]->dfree_tab[i] += cost;
         break;
       }
       case 1:
@@ -89,19 +97,19 @@ int Receiver::ReceiverFunction(_complex received_value)
             cost = d0;
             if (k >= 4)
             {
-              buffer_table[tab_index]->uncoded_bit[i] = 1;
+              buffer_table[tab_index]->uncoded_bit_tab[i] = 1;
             }
             if (k == 1 || k == 5)
             {
-              buffer_table[tab_index]->prevoius_state[i] = 2;
+              buffer_table[tab_index]->prevoius_state_tab[i] = 2;
             }
             else
             {
-              buffer_table[tab_index]->prevoius_state[i] = 3;
+              buffer_table[tab_index]->prevoius_state_tab[i] = 3;
             }
           }
         }
-        buffer_table[tab_index]->dfree[i] += cost;
+        buffer_table[tab_index]->dfree_tab[i] += cost;
         break;
       }
       case 2:
@@ -114,19 +122,19 @@ int Receiver::ReceiverFunction(_complex received_value)
             cost = d0;
             if (k >= 4)
             {
-              buffer_table[tab_index]->uncoded_bit[i] = 1;
+              buffer_table[tab_index]->uncoded_bit_tab[i] = 1;
             }
             if (k == 0 || k == 4)
             {
-              buffer_table[tab_index]->prevoius_state[i] = 1;
+              buffer_table[tab_index]->prevoius_state_tab[i] = 1;
             }
             else
             {
-              buffer_table[tab_index]->prevoius_state[i] = 0;
+              buffer_table[tab_index]->prevoius_state_tab[i] = 0;
             }
           }
         }
-        buffer_table[tab_index]->dfree[i] += cost;
+        buffer_table[tab_index]->dfree_tab[i] += cost;
         break;
       }
       case 3:
@@ -139,19 +147,19 @@ int Receiver::ReceiverFunction(_complex received_value)
             cost = d0;
             if (k >= 4)
             {
-              buffer_table[tab_index]->uncoded_bit[i] = 1;
+              buffer_table[tab_index]->uncoded_bit_tab[i] = 1;
             }
             if (k == 1 || k == 5)
             {
-              buffer_table[tab_index]->prevoius_state[i] = 3;
+              buffer_table[tab_index]->prevoius_state_tab[i] = 3;
             }
             else
             {
-              buffer_table[tab_index]->prevoius_state[i] = 2;
+              buffer_table[tab_index]->prevoius_state_tab[i] = 2;
             }
           }
         }
-        buffer_table[tab_index]->dfree[i] += cost;
+        buffer_table[tab_index]->dfree_tab[i] += cost;
         break;
       }
       default:
@@ -161,6 +169,8 @@ int Receiver::ReceiverFunction(_complex received_value)
     }//end of switch
   }//end of for()
 
+  int return_value = 0;
+
   /*Secondly make desition about last node in the buffer table basing on next 8 states if those are already received*/
   if (is_reday_for_decision <= 8)
   {
@@ -168,12 +178,27 @@ int Receiver::ReceiverFunction(_complex received_value)
   }
   else
   {
-    /*search for the lowest-cost path and decide what was sent*/
+
+    /*check every state looking for lowest cost*/
+    int lowest_dfree = buffer_table[tab_index]->dfree_tab[0];
+    int which_state = 0;
+    for (int j = 1; j < 4; j++)
+    {
+      if (buffer_table[tab_index]->dfree_tab[j] < lowest_dfree)
+      {
+        lowest_dfree = buffer_table[tab_index]->dfree_tab[j];
+        which_state = j;
+      }
+    }
+    /*search for the lowest-cost path and decide what was sent 9 tacts ago*/
     for (int i = (size_of_buffer_table + tab_index); i > tab_index; i--)
     {
       int index = i % size_of_buffer_table;
-
+      which_state = buffer_table[i]->prevoius_state_tab[which_state];
     }
+    int return_value_coded_bit = reversed_transition_table_[buffer_table[(tab_index + size_of_buffer_table - 1) % size_of_buffer_table]->prevoius_state_tab[which_state]][which_state];
+    int return_value_uncoded_bit = buffer_table[(tab_index + size_of_buffer_table - 1) % size_of_buffer_table]->uncoded_bit_tab[which_state];
+    return_value = (return_value_uncoded_bit << 1) + return_value_coded_bit;
   }
-  return 0;
+  return return_value;
 }

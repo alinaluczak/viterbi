@@ -19,7 +19,52 @@ System::~System()
   delete p_generator_;
 }
 
-void System::MainLoop()
+double System::MainLoop()
 {
-  int BER = p_receiver_->ReceiverFunction(p_channel_->ChannelFunction(p_modulator_->ModulatorFunction(p_coder_->CoderFunction((p_generator_->RandomNumber()) % 4))));
+  int coder_value = 0;
+  int modulator_value = 0;
+  _complex channel_value = {0,0};
+  _complex receiver_value = {0,0};
+  int loop_counter = 1;
+  int error_value = 0;
+  while (error_value < 100)
+  {
+    int MSB = p_generator_->RandomBit();
+    int LSB = p_generator_->RandomBit();
+    coder_value = (MSB << 1) + LSB;
+    p_results->PushInput(coder_value);
+    
+    switch (loop_counter)
+    {
+    case 0:
+    {
+      modulator_value = p_coder_->CoderFunction(coder_value);
+      break;
+    }
+    case 1:
+    {
+      channel_value = p_modulator_->ModulatorFunction(modulator_value);
+      modulator_value = p_coder_->CoderFunction(coder_value);
+      break;
+    }
+    case 2:
+    {
+      receiver_value = p_channel_->ChannelFunction(channel_value);
+      channel_value = p_modulator_->ModulatorFunction(modulator_value);
+      modulator_value = p_coder_->CoderFunction(coder_value);
+      break;
+    }
+    default:
+    {
+      p_results->PushOutput(p_receiver_->ReceiverFunction(receiver_value));
+      receiver_value = p_channel_->ChannelFunction(channel_value);
+      channel_value = p_modulator_->ModulatorFunction(modulator_value);
+      modulator_value = p_coder_->CoderFunction(coder_value);
+      break;
+    }
+    }
+
+    error_value = p_results->GetErrorValue();
+  }
+  return p_results->GetBER();
 }

@@ -16,6 +16,8 @@ Simulation::~Simulation()
 
 int Simulation::Start()
 {
+  double ber_table[10] = { 0 };
+
   SeedGeneration();
   fstream seed_file;
   seed_file.open("files/seeds.txt", ios::in);
@@ -59,7 +61,7 @@ int Simulation::Start()
       seed_file >> seeds[i];
     }
     system = new System(number_of_simulation, end_condition, seeds, lambda);
-    system->MainLoop();
+    ber_table[number_of_simulation] = system->MainLoop();
     delete system;
     ++number_of_simulation;
   }
@@ -67,6 +69,7 @@ int Simulation::Start()
   cout << endl << endl << "+++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
   cout << "Results form single simulation: " << endl;
  // wyniki->ObliczWartosci();
+  cout << ber_table[number_of_simulation] << endl;
   cout << endl << "+++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
   return 0;
 

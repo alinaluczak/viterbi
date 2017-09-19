@@ -13,7 +13,7 @@ class System
 public:
   System(int number_of_simulation, int end_condition, int seeds[2], double lambda);
   ~System();
-  void MainLoop();
+  double MainLoop();
 
 private:
   Channel *p_channel_;
@@ -21,6 +21,7 @@ private:
   Coder *p_coder_;
   Receiver *p_receiver_;
   Generator *p_generator_;
+  Results *p_results;
 };
 
 #endif //VITREBI_SYSTEM_H
