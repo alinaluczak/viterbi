@@ -17,8 +17,8 @@ public:
 
 private:
   static const int size = 20;
-  vector<int> input;
-  vector<int> output;
+  int input[size];
+  int output[size];
   int input_index;
   int output_index;
   int error_counter;

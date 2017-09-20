@@ -4,10 +4,13 @@
 #include <cmath>
 #include"results.h"
 
-struct Node
+class Node
 {
+public:
+  Node();
+  ~Node();
   int uncoded_bit_tab[4];
-  int dfree_tab[4];
+  double dfree_tab[4];
   int prevoius_state_tab[4];
 
 };

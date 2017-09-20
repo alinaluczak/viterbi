@@ -36,7 +36,7 @@ int Simulation::Start()
   cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
 
   int end_condition;
-  cout << "Please enter the end condition: (the number of the correct bits received?)" << endl;
+  cout << "Please enter the end condition: (number of deocoder errors)" << endl;
   cin >> end_condition;
   if (end_condition <= 0)
   {
@@ -61,7 +61,10 @@ int Simulation::Start()
       seed_file >> seeds[i];
     }
     system = new System(number_of_simulation, end_condition, seeds, lambda);
-    ber_table[number_of_simulation] = system->MainLoop();
+    double new_ber_value = 0;
+    new_ber_value = system->MainLoop();
+    if (new_ber_value < 0) { cout << "Error occured in  Simulation number " << number_of_simulation << endl << "Aborting." << endl; return -1; }
+    ber_table[number_of_simulation] = new_ber_value;
     delete system;
     ++number_of_simulation;
   }

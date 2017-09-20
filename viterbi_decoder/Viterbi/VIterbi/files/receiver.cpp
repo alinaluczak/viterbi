@@ -33,11 +33,12 @@ const int Receiver::output_table_[][number_of_states] = { { 0,2,4,6 },
 
 Receiver::Receiver()
 {
+  cout << "Receiver Construcotr here " << endl;
   is_reday_for_decision = 0;
-  tab_index = -1;
-  for each (Node* node in buffer_table)
+  tab_index = 0;
+  for (int node = 0; node < size_of_buffer_table; node++)
   {
-    node = new Node();
+    buffer_table[node] = new Node();
   }
 }
 
@@ -52,13 +53,13 @@ Receiver::~Receiver()
 int Receiver::ReceiverFunction(_complex received_value)
 {
 
-  int d0 = 0;
+  double d0 = 0;
 
   /*Firstly fill the output buffer table basic on newly-come value*/
 
   for (int i = 0; i < number_of_states; i++)
   {
-    int cost = 1 << 30;
+    double cost = 1 << 15;
     buffer_table[tab_index]->uncoded_bit_tab[i] = 0;
     switch (i)
     {
@@ -180,7 +181,7 @@ int Receiver::ReceiverFunction(_complex received_value)
   {
 
     /*check every state looking for lowest cost*/
-    int lowest_dfree = buffer_table[tab_index]->dfree_tab[0];
+    double lowest_dfree = buffer_table[tab_index]->dfree_tab[0];
     int which_state = 0;
     for (int j = 1; j < 4; j++)
     {
@@ -194,11 +195,32 @@ int Receiver::ReceiverFunction(_complex received_value)
     for (int i = (size_of_buffer_table + tab_index); i > tab_index; i--)
     {
       int index = i % size_of_buffer_table;
-      which_state = buffer_table[i]->prevoius_state_tab[which_state];
+      which_state = buffer_table[index]->prevoius_state_tab[which_state];
     }
     int return_value_coded_bit = reversed_transition_table_[buffer_table[(tab_index + size_of_buffer_table - 1) % size_of_buffer_table]->prevoius_state_tab[which_state]][which_state];
+    if (return_value_coded_bit < 0)
+    {
+      cout << "Revested transition table fail. " << endl;
+      return -1;
+    }
     int return_value_uncoded_bit = buffer_table[(tab_index + size_of_buffer_table - 1) % size_of_buffer_table]->uncoded_bit_tab[which_state];
     return_value = (return_value_uncoded_bit << 1) + return_value_coded_bit;
   }
   return return_value;
 }
+
+Node::Node()
+{
+  for (int i = 0; i < 4; i++)
+  {
+    uncoded_bit_tab[i] = 0;
+    dfree_tab[i] = 0;
+    prevoius_state_tab[i] = 0;
+  }
+}
+
+Node::~Node()
+{
+
+}
+

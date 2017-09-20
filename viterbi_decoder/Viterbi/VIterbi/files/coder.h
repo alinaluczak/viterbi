@@ -1,7 +1,7 @@
 #ifndef VITERBI_CODER_H
 #define VITERBI_CODER_H
 
-#include<iostream>;
+#include<iostream>
 using namespace std;
 
 class Coder

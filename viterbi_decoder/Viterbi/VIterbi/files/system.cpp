@@ -7,6 +7,7 @@ System::System(int number_of_simulation, int end_condition, int seeds[2], double
   p_coder_ = new Coder();
   p_receiver_ = new Receiver();
   p_generator_ = new Generator(seeds[1]);
+  p_results_ = new Results();
 }
 
 
@@ -25,14 +26,15 @@ double System::MainLoop()
   int modulator_value = 0;
   _complex channel_value = {0,0};
   _complex receiver_value = {0,0};
-  int loop_counter = 1;
+  int result_value = 0;
+  int loop_counter = 0;
   int error_value = 0;
   while (error_value < 100)
   {
     int MSB = p_generator_->RandomBit();
     int LSB = p_generator_->RandomBit();
     coder_value = (MSB << 1) + LSB;
-    p_results->PushInput(coder_value);
+    p_results_->PushInput(coder_value);
     
     switch (loop_counter)
     {
@@ -56,15 +58,17 @@ double System::MainLoop()
     }
     default:
     {
-      p_results->PushOutput(p_receiver_->ReceiverFunction(receiver_value));
+      result_value = p_receiver_->ReceiverFunction(receiver_value);
+      if (result_value < 0) { cout << "Aboart" << endl; return -1; }
+      p_results_->PushOutput(result_value);
       receiver_value = p_channel_->ChannelFunction(channel_value);
       channel_value = p_modulator_->ModulatorFunction(modulator_value);
       modulator_value = p_coder_->CoderFunction(coder_value);
       break;
     }
     }
-
-    error_value = p_results->GetErrorValue();
+    ++loop_counter;
+    error_value = p_results_->GetErrorValue();
   }
-  return p_results->GetBER();
+  return p_results_->GetBER();
 }

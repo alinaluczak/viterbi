@@ -21,7 +21,7 @@ private:
   Coder *p_coder_;
   Receiver *p_receiver_;
   Generator *p_generator_;
-  Results *p_results;
+  Results *p_results_;
 };
 
 #endif //VITREBI_SYSTEM_H

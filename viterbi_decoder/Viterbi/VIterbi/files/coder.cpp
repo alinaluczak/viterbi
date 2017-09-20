@@ -14,6 +14,7 @@ const int Coder::output_table_[][number_of_states] = {{0,2,4,6},
 
 Coder::Coder()
 {
+  cout << "Coder Construcotr here " << endl;
   previous_state_ = 0;
   current_state_ = 0;
 }

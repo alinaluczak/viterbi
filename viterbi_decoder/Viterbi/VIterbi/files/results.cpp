@@ -2,9 +2,14 @@
 
 Results::Results()
 {
+  cout << "Results Construcotr here " << endl;
   input_index = 0;
   output_index = 0;
-  input = &(new vector<int>);
+  for (int i = 0; i < size; i++)
+  {
+    input[i] = 0;
+    output[i] = 0;
+  }
   //input = new vector <int>;
   //output = new vector <int>;
 }
