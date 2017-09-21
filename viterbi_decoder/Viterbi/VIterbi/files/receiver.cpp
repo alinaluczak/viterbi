@@ -50,21 +50,164 @@ Receiver::~Receiver()
   }
 }
 
+
 int Receiver::ReceiverFunction(_complex received_value)
 {
 
   double d0 = 0;
+  static int which_iteration = 0;
+  int return_value = 5;
 
   /*Firstly fill the output buffer table basic on newly-come value*/
 
-  for (int i = 0; i < number_of_states; i++)
+  if (which_iteration = 0)
   {
-    double cost = 1 << 15;
-    buffer_table[tab_index]->uncoded_bit_tab[i] = 0;
-    switch (i)
+    ++which_iteration;
+    for (int i = 0; i < number_of_states; i += 2)
     {
+      double cost = 1 << 15;
+      buffer_table[tab_index]->uncoded_bit_tab[i] = 0;
+      switch (i)
+      {
       case 0:
-      { 
+      {
+        for (int k = 0; k < 8; k += 4)
+        {
+          d0 = sqrt(pow(received_value.x - modulator_table_[k].x, 2) + pow(received_value.y - modulator_table_[k].y, 2));
+          if (d0 < cost)
+          {
+            cost = d0;
+            if (k >= 4)
+            {
+              buffer_table[tab_index]->uncoded_bit_tab[i] = 1;
+            }
+            buffer_table[tab_index]->previous_state_tab[i] = 0;
+          }
+        }
+        buffer_table[tab_index]->dfree_tab[i] += cost;
+        break;
+      }
+      case 2:
+      {
+        for (int k = 2; k < 8; k += 4)
+        {
+          d0 = sqrt(pow(received_value.x - modulator_table_[k].x, 2) + pow(received_value.y - modulator_table_[k].y, 2));
+          if (d0 < cost)
+          {
+            cost = d0;
+            if (k >= 4)
+            {
+              buffer_table[tab_index]->uncoded_bit_tab[i] = 1;
+            }
+            buffer_table[tab_index]->previous_state_tab[i] = 0;
+          }
+        }
+        buffer_table[tab_index]->dfree_tab[i] += cost;
+        break;
+      }
+      }
+    }
+  }
+
+  else if ( which_iteration = 1 )
+  {
+    ++which_iteration;
+    for (int i = 0; i < number_of_states; i++)
+    {
+      double cost = 1 << 15;
+      buffer_table[tab_index]->uncoded_bit_tab[i] = 0;
+      switch (i)
+      {
+      case 0:
+      {
+        for (int k = 0; k < 8; k += 4)
+        {
+          d0 = sqrt(pow(received_value.x - modulator_table_[k].x, 2) + pow(received_value.y - modulator_table_[k].y, 2));
+          if (d0 < cost)
+          {
+            cost = d0;
+            if (k >= 4)
+            {
+              buffer_table[tab_index]->uncoded_bit_tab[i] = 1;
+            }
+            buffer_table[tab_index]->previous_state_tab[i] = 0;
+          }
+        }
+        buffer_table[tab_index]->dfree_tab[i] += cost;
+        break;
+      }
+      case 1:
+      {
+        for (int k = 1; k < 8; k += 4)
+        {
+          d0 = sqrt(pow(received_value.x - modulator_table_[k].x, 2) + pow(received_value.y - modulator_table_[k].y, 2));
+          if (d0 < cost)
+          {
+            cost = d0;
+            if (k >= 4)
+            {
+              buffer_table[tab_index]->uncoded_bit_tab[i] = 1;
+            }
+            buffer_table[tab_index]->previous_state_tab[i] = 2;
+          }
+        }
+        buffer_table[tab_index]->dfree_tab[i] += cost;
+        break;
+      }
+      case 2:
+      {
+        for (int k = 2; k < 8; k += 4)
+        {
+          d0 = sqrt(pow(received_value.x - modulator_table_[k].x, 2) + pow(received_value.y - modulator_table_[k].y, 2));
+          if (d0 < cost)
+          {
+            cost = d0;
+            if (k >= 4)
+            {
+              buffer_table[tab_index]->uncoded_bit_tab[i] = 1;
+            }
+            buffer_table[tab_index]->previous_state_tab[i] = 0;
+          }
+        }
+        buffer_table[tab_index]->dfree_tab[i] += cost;
+        break;
+      }
+      case 3:
+      {
+        for (int k = 3; k < 8; k += 4)
+        {
+          d0 = sqrt(pow(received_value.x - modulator_table_[k].x, 2) + pow(received_value.y - modulator_table_[k].y, 2));
+          if (d0 < cost)
+          {
+            cost = d0;
+            if (k >= 4)
+            {
+              buffer_table[tab_index]->uncoded_bit_tab[i] = 1;
+            }
+            buffer_table[tab_index]->previous_state_tab[i] = 2;
+          }
+        }
+        buffer_table[tab_index]->dfree_tab[i] += cost;
+        break;
+      }
+      default:
+      {
+        break;
+      }
+      }//end of switch
+    }//end of for()
+  }
+
+  else
+  {
+    for (int i = 0; i < number_of_states; i++)
+    {
+      double cost = 1 << 15;
+      buffer_table[tab_index]->uncoded_bit_tab[i] = 0;
+      switch (i)
+      {
+      case 0:
+      {
         for (int k = 0; k < 8; k += 2)
         {
           d0 = sqrt(pow(received_value.x - modulator_table_[k].x, 2) + pow(received_value.y - modulator_table_[k].y, 2));
@@ -77,11 +220,11 @@ int Receiver::ReceiverFunction(_complex received_value)
             }
             if (k == 0 || k == 4)
             {
-              buffer_table[tab_index]->prevoius_state_tab[i] = 0;
+              buffer_table[tab_index]->previous_state_tab[i] = 0;
             }
             else
             {
-              buffer_table[tab_index]->prevoius_state_tab[i] = 1;
+              buffer_table[tab_index]->previous_state_tab[i] = 1;
             }
           }
         }
@@ -102,11 +245,11 @@ int Receiver::ReceiverFunction(_complex received_value)
             }
             if (k == 1 || k == 5)
             {
-              buffer_table[tab_index]->prevoius_state_tab[i] = 2;
+              buffer_table[tab_index]->previous_state_tab[i] = 2;
             }
             else
             {
-              buffer_table[tab_index]->prevoius_state_tab[i] = 3;
+              buffer_table[tab_index]->previous_state_tab[i] = 3;
             }
           }
         }
@@ -127,11 +270,11 @@ int Receiver::ReceiverFunction(_complex received_value)
             }
             if (k == 0 || k == 4)
             {
-              buffer_table[tab_index]->prevoius_state_tab[i] = 1;
+              buffer_table[tab_index]->previous_state_tab[i] = 1;
             }
             else
             {
-              buffer_table[tab_index]->prevoius_state_tab[i] = 0;
+              buffer_table[tab_index]->previous_state_tab[i] = 0;
             }
           }
         }
@@ -152,11 +295,11 @@ int Receiver::ReceiverFunction(_complex received_value)
             }
             if (k == 1 || k == 5)
             {
-              buffer_table[tab_index]->prevoius_state_tab[i] = 3;
+              buffer_table[tab_index]->previous_state_tab[i] = 3;
             }
             else
             {
-              buffer_table[tab_index]->prevoius_state_tab[i] = 2;
+              buffer_table[tab_index]->previous_state_tab[i] = 2;
             }
           }
         }
@@ -167,45 +310,45 @@ int Receiver::ReceiverFunction(_complex received_value)
       {
         break;
       }
-    }//end of switch
-  }//end of for()
-
-  int return_value = 0;
-
-  /*Secondly make desition about last node in the buffer table basing on next 8 states if those are already received*/
-  if (is_reday_for_decision <= 8)
-  {
-    ++is_reday_for_decision;
+      }//end of switch
+    }//end of for()
   }
-  else
-  {
-
-    /*check every state looking for lowest cost*/
-    double lowest_dfree = buffer_table[tab_index]->dfree_tab[0];
-    int which_state = 0;
-    for (int j = 1; j < 4; j++)
+    /*Secondly make desition about last node in the buffer table basing on next 8 states if those are already received*/
+    if (is_reday_for_decision <= 8)
     {
-      if (buffer_table[tab_index]->dfree_tab[j] < lowest_dfree)
+      ++is_reday_for_decision;
+    }
+    else
+    {
+      /*check every state looking for lowest cost*/
+      double lowest_dfree = buffer_table[tab_index]->dfree_tab[0];
+      int which_state = 0;
+      for (int j = 1; j < 4; j++)
       {
-        lowest_dfree = buffer_table[tab_index]->dfree_tab[j];
-        which_state = j;
+        if (buffer_table[tab_index]->dfree_tab[j] < lowest_dfree)
+        {
+          lowest_dfree = buffer_table[tab_index]->dfree_tab[j];
+          which_state = j;
+        }
       }
+      /*search for the lowest-cost path and decide what was sent 9 tacts ago*/
+      for (int i = (size_of_buffer_table + tab_index); i > tab_index; i--)
+      {
+        int index = i % size_of_buffer_table;
+        which_state = buffer_table[index]->previous_state_tab[which_state];
+      }
+      int return_value_coded_bit = reversed_transition_table_[buffer_table[(tab_index + size_of_buffer_table - 1) % size_of_buffer_table]->previous_state_tab[which_state]][which_state];
+      if (return_value_coded_bit < 0)
+      {
+        cout << "Revested transition table fail. " << endl;
+        return -1;
+      }
+      int return_value_uncoded_bit = buffer_table[(tab_index + size_of_buffer_table - 1) % size_of_buffer_table]->uncoded_bit_tab[which_state];
+      return_value = (return_value_uncoded_bit << 1) + return_value_coded_bit;
     }
-    /*search for the lowest-cost path and decide what was sent 9 tacts ago*/
-    for (int i = (size_of_buffer_table + tab_index); i > tab_index; i--)
-    {
-      int index = i % size_of_buffer_table;
-      which_state = buffer_table[index]->prevoius_state_tab[which_state];
-    }
-    int return_value_coded_bit = reversed_transition_table_[buffer_table[(tab_index + size_of_buffer_table - 1) % size_of_buffer_table]->prevoius_state_tab[which_state]][which_state];
-    if (return_value_coded_bit < 0)
-    {
-      cout << "Revested transition table fail. " << endl;
-      return -1;
-    }
-    int return_value_uncoded_bit = buffer_table[(tab_index + size_of_buffer_table - 1) % size_of_buffer_table]->uncoded_bit_tab[which_state];
-    return_value = (return_value_uncoded_bit << 1) + return_value_coded_bit;
-  }
+
+  ++tab_index;
+  tab_index %= size_of_buffer_table;
   return return_value;
 }
 
@@ -215,7 +358,7 @@ Node::Node()
   {
     uncoded_bit_tab[i] = 0;
     dfree_tab[i] = 0;
-    prevoius_state_tab[i] = 0;
+    previous_state_tab[i] = 0;
   }
 }
 

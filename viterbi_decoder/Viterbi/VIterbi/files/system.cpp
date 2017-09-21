@@ -1,5 +1,9 @@
 #include "system.h"
 
+#include<string>
+#include<iostream>
+using namespace std;
+
 System::System(int number_of_simulation, int end_condition, int seeds[2], double lambda)
 {
   p_channel_ = new Channel(seeds[0], lambda);
@@ -22,6 +26,7 @@ System::~System()
 
 double System::MainLoop()
 {
+  string wait_for_sign;
   int coder_value = 0;
   int modulator_value = 0;
   _complex channel_value = {0,0};
@@ -59,8 +64,11 @@ double System::MainLoop()
     default:
     {
       result_value = p_receiver_->ReceiverFunction(receiver_value);
-      if (result_value < 0) { cout << "Aboart" << endl; return -1; }
-      p_results_->PushOutput(result_value);
+      if (result_value < 0) { cout << "Abort" << endl; return -1; }
+      if (result_value >= 0 && result_value < 4)
+      {
+        p_results_->PushOutput(result_value);
+      }
       receiver_value = p_channel_->ChannelFunction(channel_value);
       channel_value = p_modulator_->ModulatorFunction(modulator_value);
       modulator_value = p_coder_->CoderFunction(coder_value);

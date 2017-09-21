@@ -6,6 +6,7 @@ Results::Results()
   input_index = 0;
   output_index = 0;
   error_counter = 0;
+  bit_counter = 0;
 
   for (int i = 0; i < size; i++)
   {

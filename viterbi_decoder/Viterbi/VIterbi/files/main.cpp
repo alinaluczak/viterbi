@@ -10,4 +10,5 @@ int main()
   Simulation *simulation = new Simulation();
   simulation->Start();
   delete simulation;
+  
 }
