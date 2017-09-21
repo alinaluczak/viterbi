@@ -21,7 +21,7 @@ _complex Channel::ChannelFunction(_complex &input_value)
   int random_sign_re = generator->RandomBit();
   int random_sign_im = generator->RandomBit();
 
-  if (random_sign_re == 0)
+  if (random_sign_re > 0)
   {
     input_value.x -= generator->Expotential01();
   }
@@ -30,7 +30,7 @@ _complex Channel::ChannelFunction(_complex &input_value)
     input_value.x += generator->Expotential01();
   }
 
-  if (random_sign_im == 0)
+  if (random_sign_im > 0)
   {
     input_value.y -= generator->Expotential01();
   }

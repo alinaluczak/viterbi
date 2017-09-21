@@ -26,10 +26,10 @@ const int Receiver::reversed_transition_table_[][number_of_states] = { { 0, -1, 
 
 
 /* Output Table - representing output, basig on current state (row) and input (column) */
-const int Receiver::output_table_[][number_of_states] = { { 0,2,4,6 },
-                                                          { 2,0,6,4 },
-                                                          { 1,3,5,7 },
-                                                          { 3,1,7,5 } };
+const int Receiver::output_table_[][number_of_states] = { { 0, 2, 4, 6 },
+                                                          { 2, 0, 6, 4 },
+                                                          { 1, 3, 5, 7 },
+                                                          { 3, 1, 7, 5 } };
 
 Receiver::Receiver()
 {

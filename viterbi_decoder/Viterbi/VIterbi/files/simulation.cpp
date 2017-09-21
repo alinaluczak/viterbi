@@ -18,7 +18,7 @@ int Simulation::Start()
 {
   double ber_table[10] = { 0 };
 
-  SeedGeneration();
+  //SeedGeneration();
   fstream seed_file;
   seed_file.open("files/seeds.txt", ios::in);
   if (seed_file.good() != true)

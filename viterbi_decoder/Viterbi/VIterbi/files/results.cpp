@@ -5,6 +5,8 @@ Results::Results()
   cout << "Results Construcotr here " << endl;
   input_index = 0;
   output_index = 0;
+  error_counter = 0;
+
   for (int i = 0; i < size; i++)
   {
     input[i] = 0;
