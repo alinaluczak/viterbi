@@ -1,4 +1,5 @@
 #include "results.h"
+#include <iso646.h>
 
 Results::Results()
 {
@@ -30,13 +31,18 @@ void Results::PushInput(int new_value)
 }
 void Results::PushOutput(int new_value)
 {
-  bit_counter+=2;
+  bit_counter += 2;
   output[output_index] = new_value;
   if (output[output_index] != input[output_index])
   {
-
-    error_counter = output[output_index] & input[output_index];
-
+     if ((output[output_index] xor input[output_index]) == 3)
+    {
+      error_counter += 2;
+    }
+    else
+    {
+      error_counter += 1;
+    }
   }
   ++output_index;
   output_index %= size;

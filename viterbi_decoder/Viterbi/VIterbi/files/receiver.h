@@ -11,7 +11,7 @@ public:
   ~Node();
   int uncoded_bit_tab[4];
   double dfree_tab[4];
-  int previous_state_tab[4];
+  int next_state_tab[4];
 
 };
 
