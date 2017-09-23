@@ -16,7 +16,7 @@ public:
   int GetErrorValue();
 
 private:
-  static const int size = 20;
+  static const int size = 50;
   int input[size];
   int output[size];
   int input_index;

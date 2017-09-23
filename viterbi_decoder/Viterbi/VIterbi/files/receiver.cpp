@@ -1,6 +1,6 @@
 #include "receiver.h"
 
-/* Output Table - representing output (complex number), basig on input                   */
+/* Modulator Table - representing output (complex number), basig on input                */
 /*                                                                    Re       Im        */
 const _complex Receiver::modulator_table_[number_of_states * 2] = { { 0.7  ,  -0.7 }, //s0
                                                                     { 1    ,  0    }, //s1
@@ -25,7 +25,7 @@ const int Receiver::reversed_transition_table_[][number_of_states] = { { 0, -1, 
                                                                        { -1, 0, -1, 1 } };
 
 
-/* Output Table - representing output, basig on current state (row) and input (column) */
+/* coder Table - representing output, basig on current state (row) and input (column) */
 const int Receiver::output_table_[][number_of_states] = { { 0, 2, 4, 6 },
                                                           { 2, 0, 6, 4 },
                                                           { 1, 3, 5, 7 },
@@ -59,7 +59,7 @@ int Receiver::ReceiverFunction(_complex received_value)
 
   /*Firstly fill the output buffer table basic on newly-come value*/
 
-  if (which_iteration = 0)
+  if (which_iteration == 0)
   {
     ++which_iteration;
     for (int i = 0; i < number_of_states; i += 2)
@@ -83,7 +83,7 @@ int Receiver::ReceiverFunction(_complex received_value)
             buffer_table[tab_index]->previous_state_tab[i] = 0;
           }
         }
-        buffer_table[tab_index]->dfree_tab[i] += cost;
+        buffer_table[tab_index]->dfree_tab[i] = cost;
         break;
       }
       case 2:
@@ -101,14 +101,14 @@ int Receiver::ReceiverFunction(_complex received_value)
             buffer_table[tab_index]->previous_state_tab[i] = 0;
           }
         }
-        buffer_table[tab_index]->dfree_tab[i] += cost;
+        buffer_table[tab_index]->dfree_tab[i] = cost;
         break;
       }
       }
     }
   }
 
-  else if ( which_iteration = 1 )
+  else if ( which_iteration == 1 )
   {
     ++which_iteration;
     for (int i = 0; i < number_of_states; i++)
@@ -132,9 +132,12 @@ int Receiver::ReceiverFunction(_complex received_value)
             buffer_table[tab_index]->previous_state_tab[i] = 0;
           }
         }
-        buffer_table[tab_index]->dfree_tab[i] += cost;
+        int tab_previous_index = ((tab_index - 1 ) + size_of_buffer_table) % size_of_buffer_table;   //in case the tab_index is zero
+        /*add calculated cost to the cost of the path leading to this state*/
+        buffer_table[tab_index]->dfree_tab[i] = cost + buffer_table[tab_previous_index]->dfree_tab[buffer_table[tab_index]->previous_state_tab[i]];
         break;
       }
+
       case 1:
       {
         for (int k = 1; k < 8; k += 4)
@@ -150,9 +153,12 @@ int Receiver::ReceiverFunction(_complex received_value)
             buffer_table[tab_index]->previous_state_tab[i] = 2;
           }
         }
-        buffer_table[tab_index]->dfree_tab[i] += cost;
+        int tab_previous_index = ((tab_index - 1) + size_of_buffer_table) % size_of_buffer_table;   //in case the tab_index is zero
+        /*add calculated cost to the cost of the path leading to this state*/
+        buffer_table[tab_index]->dfree_tab[i] = cost + buffer_table[tab_previous_index]->dfree_tab[buffer_table[tab_index]->previous_state_tab[i]];
         break;
       }
+
       case 2:
       {
         for (int k = 2; k < 8; k += 4)
@@ -168,9 +174,12 @@ int Receiver::ReceiverFunction(_complex received_value)
             buffer_table[tab_index]->previous_state_tab[i] = 0;
           }
         }
-        buffer_table[tab_index]->dfree_tab[i] += cost;
+        int tab_previous_index = ((tab_index - 1) + size_of_buffer_table) % size_of_buffer_table;   //in case the tab_index is zero
+        /*add calculated cost to the cost of the path leading to this state*/
+        buffer_table[tab_index]->dfree_tab[i] = cost + buffer_table[tab_previous_index]->dfree_tab[buffer_table[tab_index]->previous_state_tab[i]];
         break;
       }
+
       case 3:
       {
         for (int k = 3; k < 8; k += 4)
@@ -186,9 +195,12 @@ int Receiver::ReceiverFunction(_complex received_value)
             buffer_table[tab_index]->previous_state_tab[i] = 2;
           }
         }
-        buffer_table[tab_index]->dfree_tab[i] += cost;
+        int tab_previous_index = ((tab_index - 1) + size_of_buffer_table) % size_of_buffer_table;   //in case the tab_index is zero
+        /*add calculated cost to the cost of the path leading to this state*/
+        buffer_table[tab_index]->dfree_tab[i] = cost + buffer_table[tab_previous_index]->dfree_tab[buffer_table[tab_index]->previous_state_tab[i]]; 
         break;
       }
+
       default:
       {
         break;
@@ -227,7 +239,9 @@ int Receiver::ReceiverFunction(_complex received_value)
             }
           }
         }
-        buffer_table[tab_index]->dfree_tab[i] += cost;
+        int tab_previous_index = ((tab_index - 1) + size_of_buffer_table) % size_of_buffer_table;   //in case the tab_index is zero
+        /*add calculated cost to the cost of the path leading to this state*/
+        buffer_table[tab_index]->dfree_tab[i] = cost + buffer_table[tab_previous_index]->dfree_tab[buffer_table[tab_index]->previous_state_tab[i]];
         break;
       }
       case 1:
@@ -252,7 +266,9 @@ int Receiver::ReceiverFunction(_complex received_value)
             }
           }
         }
-        buffer_table[tab_index]->dfree_tab[i] += cost;
+        int tab_previous_index = ((tab_index - 1) + size_of_buffer_table) % size_of_buffer_table;   //in case the tab_index is zero
+        /*add calculated cost to the cost of the path leading to this state*/
+        buffer_table[tab_index]->dfree_tab[i] = cost + buffer_table[tab_previous_index]->dfree_tab[buffer_table[tab_index]->previous_state_tab[i]];
         break;
       }
       case 2:
@@ -277,7 +293,9 @@ int Receiver::ReceiverFunction(_complex received_value)
             }
           }
         }
-        buffer_table[tab_index]->dfree_tab[i] += cost;
+        int tab_previous_index = ((tab_index - 1) + size_of_buffer_table) % size_of_buffer_table;   //in case the tab_index is zero
+        /*add calculated cost to the cost of the path leading to this state*/
+        buffer_table[tab_index]->dfree_tab[i] = cost + buffer_table[tab_previous_index]->dfree_tab[buffer_table[tab_index]->previous_state_tab[i]]; 
         break;
       }
       case 3:
@@ -302,9 +320,12 @@ int Receiver::ReceiverFunction(_complex received_value)
             }
           }
         }
-        buffer_table[tab_index]->dfree_tab[i] += cost;
+        int tab_previous_index = ((tab_index - 1) + size_of_buffer_table) % size_of_buffer_table;   //in case the tab_index is zero
+        /*add calculated cost to the cost of the path leading to this state*/
+        buffer_table[tab_index]->dfree_tab[i] = cost + buffer_table[tab_previous_index]->dfree_tab[buffer_table[tab_index]->previous_state_tab[i]];
         break;
       }
+
       default:
       {
         break;
@@ -312,8 +333,9 @@ int Receiver::ReceiverFunction(_complex received_value)
       }//end of switch
     }//end of for()
   }
+
     /*Secondly make desition about last node in the buffer table basing on next 8 states if those are already received*/
-    if (is_reday_for_decision <= 8)
+    if (is_reday_for_decision < 8)
     {
       ++is_reday_for_decision;
     }
@@ -330,19 +352,22 @@ int Receiver::ReceiverFunction(_complex received_value)
           which_state = j;
         }
       }
+
       /*search for the lowest-cost path and decide what was sent 9 tacts ago*/
-      for (int i = (size_of_buffer_table + tab_index); i > tab_index; i--)
+      for (int i = (size_of_buffer_table + tab_index); i > tab_index + 1; i--)
       {
         int index = i % size_of_buffer_table;
         which_state = buffer_table[index]->previous_state_tab[which_state];
       }
-      int return_value_coded_bit = reversed_transition_table_[buffer_table[(tab_index + size_of_buffer_table - 1) % size_of_buffer_table]->previous_state_tab[which_state]][which_state];
+      int return_value_coded_bit = reversed_transition_table_
+                                [buffer_table[(tab_index + 1) % size_of_buffer_table]->previous_state_tab[which_state]]  //row
+                                [which_state];                                                                                                  //column
       if (return_value_coded_bit < 0)
       {
         cout << "Revested transition table fail. " << endl;
         return -1;
       }
-      int return_value_uncoded_bit = buffer_table[(tab_index + size_of_buffer_table - 1) % size_of_buffer_table]->uncoded_bit_tab[which_state];
+      int return_value_uncoded_bit = buffer_table[(tab_index + 1) % size_of_buffer_table]->uncoded_bit_tab[which_state];
       return_value = (return_value_uncoded_bit << 1) + return_value_coded_bit;
     }
 

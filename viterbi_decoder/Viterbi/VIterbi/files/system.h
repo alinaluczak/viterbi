@@ -8,6 +8,7 @@
 #include"generator.h"
 #include"results.h"
 
+/*Class that creates whole transmitting system and keeps pointers to all elements*/
 class System
 {
 public:

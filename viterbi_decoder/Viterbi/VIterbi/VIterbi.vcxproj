@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="circular_list.cpp" />
     <ClCompile Include="files\channel.cpp" />
     <ClCompile Include="files\coder.cpp" />
     <ClCompile Include="files\generator.cpp" />
@@ -31,7 +30,6 @@
     <ClCompile Include="files\system.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="circular_list.h" />
     <ClInclude Include="files\channel.h" />
     <ClInclude Include="files\coder.h" />
     <ClInclude Include="files\generator.h" />

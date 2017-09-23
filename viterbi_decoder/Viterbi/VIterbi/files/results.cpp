@@ -49,7 +49,7 @@ void Results::PushOutput(int new_value)
 double Results::GetBER()
 {
   if (bit_counter != 0)
-    return error_counter / bit_counter;
+    return (double)error_counter / bit_counter;
   else
     return 0;
 }

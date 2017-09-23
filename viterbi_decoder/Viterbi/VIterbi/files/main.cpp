@@ -13,6 +13,5 @@ int main()
   string str;
   getline(cin, str);
   getline(cin, str);
-  getline(cin, str);
 
 }

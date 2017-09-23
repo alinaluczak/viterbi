@@ -1,5 +1,5 @@
 #include "modulator.h"
-#include<iostream>;
+#include<iostream>
 using namespace std;
 
 /* Output Table - representing output (complex number), basig on input            */

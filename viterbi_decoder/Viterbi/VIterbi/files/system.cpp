@@ -50,20 +50,20 @@ double System::MainLoop()
     
     switch (loop_counter)
     {
-    //first value in system - goes to coder
+    //first value taah appeares in system - goes to coder
     case 0:
     {
       modulator_value = p_coder_->CoderFunction(coder_value);
       break;
     }
-    //second value
+    //second value appeares, first go to modulator
     case 1:
     {
       channel_value = p_modulator_->ModulatorFunction(modulator_value);
       modulator_value = p_coder_->CoderFunction(coder_value);
       break;
     }
-    //third value - first goes to channel
+    //third value appeares - first goes to channel
     case 2:
     {
       receiver_value = p_channel_->ChannelFunction(channel_value);
@@ -76,7 +76,7 @@ double System::MainLoop()
     {
       result_value = p_receiver_->ReceiverFunction(receiver_value);
       if (result_value < 0) { cout << "Abort" << endl; return -1; }  //error handling, return error code
-      if (result_value >= 0 && result_value < 4)                     //checking if the system is ready to decod and there was no error
+      if (result_value >= 0 && result_value < 4)                     //checking if the system is ready to decode and if there was no error
       {
         p_results_->PushOutput(result_value);
       }
