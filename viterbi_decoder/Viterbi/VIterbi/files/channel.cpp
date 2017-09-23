@@ -4,8 +4,6 @@ using namespace std;
 
 Channel::Channel(int seed, double lambda)
 {
-  cout << "Channel Construcotr here " << endl;
-
   generator = new Generator(seed, lambda);
 }
 

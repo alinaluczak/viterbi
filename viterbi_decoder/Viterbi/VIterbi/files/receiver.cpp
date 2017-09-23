@@ -33,7 +33,6 @@ const int Receiver::output_table_[][number_of_states] = { { 0, 2, 4, 6 },
 
 Receiver::Receiver()
 {
-  cout << "Receiver Construcotr here " << endl;
   is_reday_for_decision = 0;
   tab_index = 0;
   for (int node = 0; node < size_of_buffer_table; node++)

@@ -14,10 +14,7 @@ const _complex Modulator::output_table_[number_of_states] = {{ 0.7  ,  -0.7 }, /
                                                              { 0    ,  -1 } }; //s7
 
 Modulator::Modulator()
-{
-  cout << "Modulator Construcotr here " << endl;
-
-}
+{}
 
 Modulator::~Modulator()
 {}

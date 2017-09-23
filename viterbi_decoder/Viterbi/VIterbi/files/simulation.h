@@ -4,6 +4,7 @@
 #include "system.h"
 #include "results.h"
 
+/*Class that creates ten systems and collects results - BER values*/
 class Simulation
 {
 public:

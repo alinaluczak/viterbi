@@ -3,6 +3,8 @@
 
 #include <cmath>
 #include "generator.h"
+
+/*Class that represents transmitting channes - adds noise to signal*/
 class Channel
 {
 public:
@@ -11,7 +13,7 @@ public:
   _complex ChannelFunction(_complex &input_value);
 
 private:
-  Generator *generator;
+  Generator *generator;  //to generate noise
 };
 
 #endif //VITERBI_CHANNEL_H

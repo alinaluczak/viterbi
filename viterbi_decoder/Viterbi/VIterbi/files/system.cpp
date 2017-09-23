@@ -12,6 +12,7 @@ System::System(int number_of_simulation, int end_condition, int seeds[2], double
   p_receiver_ = new Receiver();
   p_generator_ = new Generator(seeds[1]);
   p_results_ = new Results();
+  end_condition_ = end_condition;
 }
 
 
@@ -26,34 +27,43 @@ System::~System()
 
 double System::MainLoop()
 {
-  string wait_for_sign;
-  int coder_value = 0;
-  int modulator_value = 0;
-  _complex channel_value = {0,0};
-  _complex receiver_value = {0,0};
-  int result_value = 0;
-  int loop_counter = 0;
-  int error_value = 0;
-  while (error_value < 100)
+  string wait_for_sign;            //string to getline function
+  int coder_value = 0;             //value that will be passed to coder
+  int modulator_value = 0;         //value that will be passed to modulator
+  _complex channel_value = {0,0};  //value that will be passed to channel
+  _complex receiver_value = {0,0}; //value that will be passed to receiver
+  int result_value = 0;            //value that will be passed to result - decoded value
+  int loop_counter = 0;            //value that handles first 
+  int error_value = 0;             //value that represents number of detected errors
+
+  while (error_value < end_condition_)
   {
+    //generate new bits
     int MSB = p_generator_->RandomBit();
     int LSB = p_generator_->RandomBit();
+
+    //merge them into new input value
     coder_value = (MSB << 1) + LSB;
+    
+    //put it to input table
     p_results_->PushInput(coder_value);
     
     switch (loop_counter)
     {
+    //first value in system - goes to coder
     case 0:
     {
       modulator_value = p_coder_->CoderFunction(coder_value);
       break;
     }
+    //second value
     case 1:
     {
       channel_value = p_modulator_->ModulatorFunction(modulator_value);
       modulator_value = p_coder_->CoderFunction(coder_value);
       break;
     }
+    //third value - first goes to channel
     case 2:
     {
       receiver_value = p_channel_->ChannelFunction(channel_value);
@@ -61,11 +71,12 @@ double System::MainLoop()
       modulator_value = p_coder_->CoderFunction(coder_value);
       break;
     }
+    //first value appears in receiver - system works poroperly form now on
     default:
     {
       result_value = p_receiver_->ReceiverFunction(receiver_value);
-      if (result_value < 0) { cout << "Abort" << endl; return -1; }
-      if (result_value >= 0 && result_value < 4)
+      if (result_value < 0) { cout << "Abort" << endl; return -1; }  //error handling, return error code
+      if (result_value >= 0 && result_value < 4)                     //checking if the system is ready to decod and there was no error
       {
         p_results_->PushOutput(result_value);
       }

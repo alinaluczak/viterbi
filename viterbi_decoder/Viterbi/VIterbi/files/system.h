@@ -6,7 +6,7 @@
 #include"coder.h"
 #include"receiver.h"
 #include"generator.h"
-//#include"results.h"
+#include"results.h"
 
 class System
 {
@@ -22,6 +22,7 @@ private:
   Receiver *p_receiver_;
   Generator *p_generator_;
   Results *p_results_;
+  int end_condition_;
 };
 
 #endif //VITREBI_SYSTEM_H

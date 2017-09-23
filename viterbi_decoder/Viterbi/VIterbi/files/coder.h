@@ -4,9 +4,9 @@
 #include<iostream>
 using namespace std;
 
+/*Class that represents coder 2/3 (2 bits on input / three bits on output) and has four states (two T flip-flops)*/
 class Coder
 {
-
 public:
   Coder();
   ~Coder();

@@ -38,41 +38,55 @@ int Simulation::Start()
   int end_condition;
   cout << "Please enter the end condition: (number of deocoder errors)" << endl;
   cin >> end_condition;
+
   if (end_condition <= 0)
   {
     cout << "Wrong value for the end condition. Aborting." << endl;
     return -1;
   }
+
   double lambda;
   cout << "Please enter lambda parameter ( for the generaotrs )." << endl;
   cin >> lambda;
+
   if (lambda <= 0)
   {
     cout << "Wrong value for lambda. Aborting." << endl;
     return -1;
   }
-  while (number_of_simulation < 10)
+
+  while (number_of_simulation < 10)        //while that creates ten systems
   {
+
     cout << endl << "*********************" << endl;
     cout << "Number of simulation: " << number_of_simulation + 1 << endl;
     cout << "*********************" << endl;
+
     for (int i = 0; i < 2; i++)
     {
       seed_file >> seeds[i];
     }
-    system = new System(number_of_simulation, end_condition, seeds, lambda);
+
+    system = new System(number_of_simulation, end_condition, seeds, lambda);  //create new system
     double new_ber_value = 0;
-    new_ber_value = system->MainLoop();
-    if (new_ber_value < 0) { cout << "Error occured in  Simulation number " << number_of_simulation << endl << "Aborting." << endl; return -1; }
-    ber_table[number_of_simulation] = new_ber_value;
+    new_ber_value = system->MainLoop();                                       //call MainLoop in system
+
+    if (new_ber_value < 0) { cout << "Error occured in  Simulation number "   //error handling
+      << number_of_simulation << endl << "Aborting." << endl; return -1; }
+    ber_table[number_of_simulation] = new_ber_value;                          //write new value
+
+    cout << endl << endl << "+++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+    cout << "Results form single simulation: " << endl;
+    cout << ber_table[number_of_simulation] << endl;
+    cout << endl << "+++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+
     delete system;
     ++number_of_simulation;
   }
 
   cout << endl << endl << "+++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
-  cout << "Results form single simulation: " << endl;
- // wyniki->ObliczWartosci();
-  cout << ber_table[number_of_simulation] << endl;
+  cout << "Results form Simulation: " << endl;
+ // cout << ber_table[number_of_simulation] << endl;
   cout << endl << "+++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
   return 0;
 
