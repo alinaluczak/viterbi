@@ -30,7 +30,7 @@ private:
   static const int reversed_transition_table_[][number_of_states];
   static const int output_table_[][number_of_states];
   int is_reday_for_decision; //if this variable >= 9 - then it is ready
-  Node* buffer_table[size_of_buffer_table];
+  Node* buffer_table[number_of_states][size_of_buffer_table];
   int tab_index;
 
 };
