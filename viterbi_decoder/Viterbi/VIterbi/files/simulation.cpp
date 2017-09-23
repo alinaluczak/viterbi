@@ -32,7 +32,7 @@ int Simulation::Start()
   cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
   cout << "Simulation of TCM Encoder." << endl;
   cout << "10 simulations with different seeds." << endl;
-  cout << "Made by Alina Luczak and Robert Kaczmarek." << endl;
+  cout << "Written by Alina Luczak and Robert Kaczmarek." << endl;
   cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++" << endl << endl;
 
   int end_condition;
@@ -55,7 +55,7 @@ int Simulation::Start()
     return -1;
   }
 
-  while (number_of_simulation < 10)        //while that creates ten systems
+  while (number_of_simulation < 10)        //while that creates 10 systems
   {
 
     cout << endl << "*********************" << endl;
@@ -75,19 +75,25 @@ int Simulation::Start()
       << number_of_simulation << endl << "Aborting." << endl; return -1; }
     ber_table[number_of_simulation] = new_ber_value;                          //write new value
 
-    cout << endl << endl << "+++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
-    cout << "Results form single simulation: " << endl;
+    cout << "Results form simulation: " << endl;
     cout << ber_table[number_of_simulation] << endl;
-    cout << endl << "+++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
 
     delete system;
     ++number_of_simulation;
   }
 
-  cout << endl << endl << "+++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+  double sum = 0;
+  double ultimate_result = 0;
+  for (int i = 0; i < 10; i++)
+  {
+    sum += ber_table[i];
+  }
+  ultimate_result = sum / 10;
+
+  cout << endl << endl << "*******************************" << endl;
   cout << "Results form Simulation: " << endl;
- // cout << ber_table[number_of_simulation] << endl;
-  cout << endl << "+++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+  cout << ultimate_result << endl;
+  cout << endl << "*******************************" << endl;
   return 0;
 
 }

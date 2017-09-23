@@ -1,9 +1,8 @@
 #include<iostream>
 #include<string>
-using namespace std;
-
-#include"simulation.h"
 #include<cmath>
+#include"simulation.h"
+using namespace std;
 
 int main()
 {

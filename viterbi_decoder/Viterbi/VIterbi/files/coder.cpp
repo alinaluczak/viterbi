@@ -1,4 +1,6 @@
 #include "coder.h"
+#include<iostream>
+using namespace std;
 
 /* Transition Table - representing present state, basing on input (column) and prevoius state (row) */
 const int Coder::transition_table_[][number_of_states] = {{0,2,0,2},

@@ -1,10 +1,7 @@
 #ifndef VITERBI_RESULTS_H
 #define VITERBI_RESULTS_H
 
-#include<iostream>
-using namespace std;
-#include <vector>
-
+/*Class that holds the input and output values and compares them, counts errors and calculates BER value*/
 class Results
 {
 public:
@@ -17,10 +14,10 @@ public:
 
 private:
   static const int size = 50;
-  int input[size];
-  int output[size];
-  int input_index;
-  int output_index;
+  int input[size];            //buffer table that holds input values
+  int output[size];           //buffer table that holds output values
+  int input_index;            //index of input buffer table
+  int output_index;           //index of output buffer table
   int error_counter;
   int bit_counter;
 

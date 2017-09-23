@@ -1,7 +1,6 @@
 #include "results.h"
 #include <iso646.h>
 
-
 Results::Results()
 {
   input_index = 0;

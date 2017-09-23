@@ -1,5 +1,6 @@
 #ifndef VITERBI_GENERATOR_H_
 #define VITERBI_GENERATOR_H_
+
 #include<cmath>
 
 /*Class represents a pseudo-random number generator*/
